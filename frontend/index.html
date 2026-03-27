@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitFlow — Track Your Life</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">⚡ HabitFlow</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-outline" onclick="showAuth('login')">Login</button>
+      <button class="btn-primary" onclick="showAuth('signup')">Get Started</button>
+    </div>
+  </nav>
+
+  <!-- HOME SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="floating-shapes">
+      <div class="shape shape1"></div>
+      <div class="shape shape2"></div>
+      <div class="shape shape3"></div>
+      <div class="shape shape4"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">🚀 #1 Habit Tracker in India</div>
+      <h1 class="hero-title">
+        Build Habits That
+        <span class="gradient-text">Change Your Life</span>
+      </h1>
+      <p class="hero-subtitle">
+        Track streaks, compete with friends, earn badges, and become the best version of yourself. Join 10,000+ users already transforming their lives.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn-primary btn-large" onclick="showAuth('signup')">
+          Start Free Trial 🔥
+        </button>
+        <button class="btn-outline btn-large" onclick="scrollToSection('features')">
+          See Features →
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-number">10K+</span>
+          <span class="stat-label">Active Users</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">500K+</span>
+          <span class="stat-label">Habits Tracked</span>
+        </div>
+        <div class="stat">
+          <span class="stat-number">98%</span>
+          <span class="stat-label">Success Rate</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="phone-mockup">
+        <div class="phone-screen">
+          <div class="phone-header">Good Morning! 👋</div>
+          <div class="phone-habit">
+            <span>🏃 Morning Run</span>
+            <span class="streak">🔥 7</span>
+          </div>
+          <div class="phone-habit">
+            <span>📚 Read 30 mins</span>
+            <span class="streak">🔥 14</span>
+          </div>
+          <div class="phone-habit">
+            <span>💧 Drink Water</span>
+            <span class="streak">🔥 21</span>
+          </div>
+          <div class="phone-habit">
+            <span>🧘 Meditate</span>
+            <span class="streak">🔥 5</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features" id="features">
+    <div class="section-header">
+      <div class="section-badge">✨ Features</div>
+      <h2>Everything You Need To <span class="gradient-text">Succeed</span></h2>
+      <p>Powerful tools designed to help you build lasting habits</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">🔥</div>
+        <h3>Streak Tracking</h3>
+        <p>Never break your chain! Track daily streaks and get notified before you lose them.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">👥</div>
+        <h3>Social Features</h3>
+        <p>Add friends, compare streaks, and motivate each other to stay consistent.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">🏆</div>
+        <h3>Badge System</h3>
+        <p>Earn beautiful badges for milestones. Show off your achievements on your profile.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">📊</div>
+        <h3>Progress Analytics</h3>
+        <p>Detailed charts and insights to understand your habit patterns over time.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">⚡</div>
+        <h3>Premium Features</h3>
+        <p>Unlimited habits, advanced analytics, and priority support with premium plan.</p>
+      </div>
+      <div class="feature-card" data-aos="fade-up">
+        <div class="feature-icon">🔔</div>
+        <h3>Smart Reminders</h3>
+        <p>Get personalized reminders at the right time to never miss a habit.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS SECTION -->
+  <section class="reviews" id="reviews">
+    <div class="section-header">
+      <div class="section-badge">⭐ Reviews</div>
+      <h2>Loved By <span class="gradient-text">Thousands</span></h2>
+      <p>Real stories from real users who transformed their lives</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p>"HabitFlow changed my life! I've maintained a 100-day streak for meditation. The badge system keeps me motivated!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">AR</div>
+          <div>
+            <strong>Arjun Reddy</strong>
+            <span>Software Engineer, Bangalore</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p>"The friends feature is amazing! Me and my colleagues compete on streaks every day. Best productivity app ever!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">PS</div>
+          <div>
+            <strong>Priya Sharma</strong>
+            <span>Product Manager, Mumbai</span>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">⭐⭐⭐⭐⭐</div>
+        <p>"Simple, clean, and effective. The premium plan is totally worth it. I've built 5 solid habits in 2 months!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">VK</div>
+          <div>
+            <strong>Vikram Kumar</strong>
+            <span>Entrepreneur, Delhi</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="about" id="about">
+    <div class="about-content">
+      <div class="section-badge">🌟 About Us</div>
+      <h2>Built For <span class="gradient-text">Indians</span>, By Indians</h2>
+      <p>HabitFlow was born in Bangalore with one mission — to make habit tracking simple, social, and fun for everyone. We support UPI payments, work in Hindi and English, and understand the Indian lifestyle.</p>
+      <div class="about-points">
+        <div class="about-point">✅ Made in India 🇮🇳</div>
+        <div class="about-point">✅ UPI Payments Supported</div>
+        <div class="about-point">✅ 7-Day Free Trial</div>
+        <div class="about-point">✅ No Hidden Charges</div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-stat">🏆 50K+ Badges Earned</div>
+        <div class="about-stat">🔥 1M+ Streaks Completed</div>
+        <div class="about-stat">👥 10K+ Friend Connections</div>
+        <div class="about-stat">⭐ 4.9/5 Average Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact" id="contact">
+    <div class="section-header">
+      <div class="section-badge">📬 Contact</div>
+      <h2>Get In <span class="gradient-text">Touch</span></h2>
+      <p>Have questions? We'd love to hear from you!</p>
+    </div>
+    <div class="contact-form">
+      <input type="text" placeholder="Your Name" id="contactName">
+      <input type="email" placeholder="Your Email" id="contactEmail">
+      <textarea placeholder="Your Message" id="contactMessage"></textarea>
+      <button class="btn-primary" onclick="sendContact()">Send Message 📨</button>
+    </div>
+  </section>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="authModal">
+    <div class="modal">
+      <button class="modal-close" onclick="hideAuth()">✕</button>
+      <div class="modal-tabs">
+        <button class="tab active" id="loginTab" onclick="switchTab('login')">Login</button>
+        <button class="tab" id="signupTab" onclick="switchTab('signup')">Sign Up</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <h2>Welcome Back! 👋</h2>
+        <input type="email" placeholder="Email" id="loginEmail">
+        <input type="password" placeholder="Password" id="loginPassword">
+        <button class="btn-primary btn-full" onclick="login()">Login</button>
+        <p class="auth-switch">Don't have an account? <a onclick="switchTab('signup')">Sign Up</a></p>
+      </div>
+
+      <!-- SIGNUP FORM -->
+      <div id="signupForm" style="display:none">
+        <h2>Create Account! 🚀</h2>
+        <input type="text" placeholder="Username" id="signupUsername">
+        <input type="email" placeholder="Email" id="signupEmail">
+        <input type="password" placeholder="Password" id="signupPassword">
+        <button class="btn-primary btn-full" onclick="signup()">Start Free Trial</button>
+        <p class="auth-switch">Already have an account? <a onclick="switchTab('login')">Login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard" id="dashboard" style="display:none">
+    <div class="dashboard-sidebar">
+      <div class="sidebar-logo">⚡ HabitFlow</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-link active" onclick="showDashTab('habits')">📋 My Habits</a>
+        <a class="sidebar-link" onclick="showDashTab('friends')">👥 Friends</a>
+        <a class="sidebar-link" onclick="showDashTab('badges')">🏆 Badges</a>
+        <a class="sidebar-link" onclick="showDashTab('profile')">👤 Profile</a>
+        <a class="sidebar-link" onclick="showDashTab('subscription')">⚡ Premium</a>
+      </nav>
+      <button class="btn-outline sidebar-logout" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="dashboard-main">
+      <!-- HABITS TAB -->
+      <div id="habitsTab" class="dash-tab">
+        <div class="dash-header">
+          <h2>My Habits 🔥</h2>
+          <button class="btn-primary" onclick="showAddHabit()">+ Add Habit</button>
+        </div>
+
+        <!-- ADD HABIT FORM -->
+        <div class="add-habit-form" id="addHabitForm" style="display:none">
+          <input type="text" placeholder="Habit title (e.g. Morning Run)" id="habitTitle">
+          <input type="text" placeholder="Description (optional)" id="habitDesc">
+          <select id="habitFreq">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+          </select>
+          <div class="form-buttons">
+            <button class="btn-primary" onclick="addHabit()">Save Habit</button>
+            <button class="btn-outline" onclick="hideAddHabit()">Cancel</button>
+          </div>
+        </div>
+
+        <div class="habits-list" id="habitsList">
+          <!-- Habits will load here -->
+        </div>
+      </div>
+
+      <!-- FRIENDS TAB -->
+      <div id="friendsTab" class="dash-tab" style="display:none">
+        <div class="dash-header">
+          <h2>Friends 👥</h2>
+        </div>
+        <div class="add-friend">
+          <input type="text" placeholder="Enter friend's username or email" id="friendInput">
+          <button class="btn-primary" onclick="addFriend()">Add Friend</button>
+        </div>
+        <div id="friendsList" class="friends-list">
+          <!-- Friends will load here -->
+        </div>
+      </div>
+
+      <!-- BADGES TAB -->
+      <div id="badgesTab" class="dash-tab" style="display:none">
+        <div class="dash-header">
+          <h2>My Badges 🏆</h2>
+        </div>
+        <div class="badges-info">
+          <p>Earn badges by maintaining streaks!</p>
+          <div class="badge-milestones">
+            <div class="milestone">🥉 3 Day Streak</div>
+            <div class="milestone">🥈 7 Day Streak</div>
+            <div class="milestone">🥇 30 Day Streak</div>
+            <div class="milestone">💎 100 Day Streak</div>
+          </div>
+        </div>
+        <div id="badgesList" class="badges-list">
+          <!-- Badges will load here -->
+        </div>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div id="profileTab" class="dash-tab" style="display:none">
+        <div class="dash-header">
+          <h2>My Profile 👤</h2>
+        </div>
+        <div class="profile-card" id="profileCard">
+          <!-- Profile will load here -->
+        </div>
+      </div>
+
+      <!-- SUBSCRIPTION TAB -->
+      <div id="subscriptionTab" class="dash-tab" style="display:none">
+        <div class="dash-header">
+          <h2>Premium Plan ⚡</h2>
+        </div>
+        <div class="plans">
+          <div class="plan-card">
+            <h3>Free Plan</h3>
+            <div class="plan-price">₹0/month</div>
+            <ul>
+              <li>✅ 3 Habits Max</li>
+              <li>✅ Basic Streak Tracking</li>
+              <li>✅ 3 Friends Max</li>
+              <li>❌ Advanced Analytics</li>
+              <li>❌ Unlimited Habits</li>
+              <li>❌ Priority Support</li>
+            </ul>
+            <button class="btn-outline">Current Plan</button>
+          </div>
+          <div class="plan-card plan-featured">
+            <div class="plan-badge">MOST POPULAR</div>
+            <h3>Premium Plan</h3>
+            <div class="plan-price">₹299/month</div>
+            <ul>
+              <li>✅ Unlimited Habits</li>
+              <li>✅ Advanced Analytics</li>
+              <li>✅ Unlimited Friends</li>
+              <li>✅ Custom Badges</li>
+              <li>✅ Priority Support</li>
+              <li>✅ 7-Day Free Trial</li>
+            </ul>
+            <button class="btn-primary" onclick="startPayment()">
+              Start Free Trial 🔥
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer" id="mainFooter">
+    <div class="footer-content">
+      <div class="footer-logo">⚡ HabitFlow</div>
+      <p>Made with ❤️ in India</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <!-- AI CHATBOX -->
+<div class="chatbox-bubble" id="chatBubble" onclick="toggleChat()">
+  💬
+  <span class="chat-notification" id="chatNotif">1</span>
+</div>
+
+<div class="chatbox-container" id="chatContainer">
+  <div class="chatbox-header">
+    <div class="chatbox-header-info">
+      <div class="chatbox-avatar">🤖</div>
+      <div>
+        <strong>HabitBot</strong>
+        <span class="chatbox-status">● Online</span>
+      </div>
+    </div>
+    <button class="chatbox-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chatbox-messages" id="chatMessages">
+    <div class="chat-msg bot">
+      <div class="chat-bubble">
+        Hey! 👋 I'm HabitBot! I can help you with habit tips, streak advice, and anything about HabitFlow. Ask me anything!
+      </div>
+    </div>
+  </div>
+
+  <div class="chatbox-input-area">
+    <input 
+      type="text" 
+      id="chatInput" 
+      placeholder="Ask me anything..." 
+      onkeypress="handleChatKey(event)"
+    />
+    <button class="chat-send-btn" onclick="sendChatMessage()">➤</button>
+  </div>
+</div>
+
+  <script src="app.js"></script>
+</body>
+</html>

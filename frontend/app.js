@@ -1,5 +1,5 @@
 // frontend/app.js — COMPLETE FIXED VERSION
-const API = 'http://localhost:5000/api';
+const API = 'https://habitflow-backend.onrender.com/api';
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
 let chatHistory = [];

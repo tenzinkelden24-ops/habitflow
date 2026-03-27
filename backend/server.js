@@ -19,7 +19,7 @@ app.use(cors({
 // ═══════════════════════════════════
 // CONNECT TO MONGODB
 // ═══════════════════════════════════
-mongoose.connect('mongodb://localhost:27017/habitdb')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/habitdb')
   .then(() => console.log('✅ Connected to MongoDB!'))
   .catch((err) => console.log('❌ MongoDB Error:', err));
 

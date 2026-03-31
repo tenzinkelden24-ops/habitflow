@@ -372,6 +372,12 @@ function sendContact() {
   const email = document.getElementById('contactEmail').value.trim();
   const message = document.getElementById('contactMessage').value.trim();
   if (!name || !email || !message) return showToast('Please fill all fields!', 'error');
+
+  // Save message to localStorage so admin panel can see it
+  const msgs = JSON.parse(localStorage.getItem('hf_messages') || '[]');
+  msgs.unshift({ id: Date.now(), name, email, message, time: new Date().toISOString(), read: false, reply: '' });
+  localStorage.setItem('hf_messages', JSON.stringify(msgs));
+
   showToast("Message sent! We'll reply soon 📨", 'success');
   document.getElementById('contactName').value = '';
   document.getElementById('contactEmail').value = '';
@@ -416,6 +422,16 @@ async function sendChatMessage() {
     const reply = data.reply || 'Sorry, try again!';
     addChatMessage(reply, 'bot');
     chatHistory.push({ role: 'assistant', content: reply });
+
+    // Save chat log to localStorage so admin panel can see it
+    const logs = JSON.parse(localStorage.getItem('hf_chatlogs') || '[]');
+    logs.unshift({
+      user: currentUser?.username || 'Guest',
+      time: new Date().toISOString(),
+      messages: chatHistory.slice(-10)
+    });
+    localStorage.setItem('hf_chatlogs', JSON.stringify(logs.slice(0, 50)));
+
   } catch (err) {
     removeTyping();
     addChatMessage('Make sure your backend server is running! 🔌', 'bot');

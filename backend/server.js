@@ -1,5 +1,4 @@
-cat > /mnt/user-data/outputs/server_final.js << 'EOF'
-// backend/server.js
+cat > /mnt/user-data/outputs/server.js << 'EOF'
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
@@ -24,8 +23,8 @@ app.use('/api/payment', require('./routes/payment'));
 app.post('/api/chat', async (req, res) => {
   try {
     const { message, history } = req.body;
-    console.log('💬 Chat received:', message);
-    console.log('🔑 API Key exists:', !!process.env.ANTHROPIC_API_KEY);
+    console.log('Chat received:', message);
+    console.log('API Key exists:', !!process.env.ANTHROPIC_API_KEY);
 
     if (!message) {
       return res.status(400).json({ success: false, reply: 'Message required!' });
@@ -33,7 +32,9 @@ app.post('/api/chat', async (req, res) => {
 
     const messages = [];
     if (history && history.length > 0) {
-      history.forEach(msg => messages.push({ role: msg.role, content: msg.content }));
+      history.forEach(function(msg) {
+        messages.push({ role: msg.role, content: msg.content });
+      });
     }
     messages.push({ role: 'user', content: message });
 
@@ -47,38 +48,35 @@ app.post('/api/chat', async (req, res) => {
       body: JSON.stringify({
         model: 'claude-haiku-4-5-20251001',
         max_tokens: 500,
-        system: `You are HabitBot, a friendly AI assistant for HabitFlow - a habit tracking app made in India. You can talk about ANYTHING - general chat, habits, productivity, science, math, life advice, anything! Be friendly and warm. Use emojis occasionally. Keep responses short and clear. About HabitFlow: users track daily habits, build streaks, earn badges, add friends, premium plan Rs 299/month with 7-day free trial.`,
+        system: 'You are HabitBot, a friendly AI assistant for HabitFlow habit tracker app made in India. You can talk about ANYTHING. Be friendly, warm, use emojis, keep responses short.',
         messages: messages
       })
     });
 
     const data = await response.json();
-    console.log('🤖 Claude status:', response.status);
-    console.log('🤖 Claude reply:', JSON.stringify(data).slice(0, 300));
+    console.log('Claude status:', response.status);
 
     if (data.content && data.content[0]) {
       res.json({ success: true, reply: data.content[0].text });
     } else {
-      console.log('❌ Bad response:', JSON.stringify(data));
+      console.log('Bad response:', JSON.stringify(data));
       res.json({ success: false, reply: 'Sorry, try again!' });
     }
   } catch (error) {
-    console.log('❌ Chat error:', error.message);
+    console.log('Chat error:', error.message);
     res.status(500).json({ success: false, reply: 'Server error! Try again.' });
   }
 });
 
-app.get('/', (req, res) => {
+app.get('/', function(req, res) {
   res.json({
-    message: '🚀 HabitFlow API is running!',
-    mongodb: mongoose.connection.readyState === 1 ? '✅ Connected' : '❌ Not connected',
-    chatbot: '✅ Ready',
-    apiKey: process.env.ANTHROPIC_API_KEY ? '✅ Set' : '❌ Missing'
+    message: 'HabitFlow API is running!',
+    mongodb: mongoose.connection.readyState === 1 ? 'Connected' : 'Not connected',
+    apiKey: process.env.ANTHROPIC_API_KEY ? 'Set' : 'Missing'
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
-  console.log(`📡 API ready at http://localhost:${PORT}/api`);
+app.listen(PORT, function() {
+  console.log('Server running at port ' + PORT);
 });
 EOF

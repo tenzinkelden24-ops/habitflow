@@ -2,7 +2,7 @@ cat > /mnt/user-data/outputs/auth_fixed.js << 'EOF'
 const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
-const User = require('../models/User_fixed');
+const User = require('../models/User');
 
 const JWT_SECRET = 'habittracker_secret_key_2024';
 

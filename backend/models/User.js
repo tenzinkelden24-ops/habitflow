@@ -1,4 +1,3 @@
-cat > /mnt/user-data/outputs/User_fixed.js << 'EOF'
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -30,4 +29,3 @@ UserSchema.methods.comparePassword = async function(password) {
 };
 
 module.exports = mongoose.model('User', UserSchema);
-EOF

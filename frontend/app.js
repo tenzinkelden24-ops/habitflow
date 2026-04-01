@@ -1,5 +1,4 @@
-// frontend/app.js — COMPLETE FIXED VERSION
-const API = 'https://habitflow-backend-k0bj.onrender.com/api'
+const API = 'https://habitflow-backend-k0bj.onrender.com/api';
 let token = localStorage.getItem('token');
 let currentUser = JSON.parse(localStorage.getItem('user') || 'null');
 let chatHistory = [];
@@ -14,9 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 function initNavbarScroll() {
   window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
-    if (navbar) {
-      navbar.classList.toggle('scrolled', window.scrollY > 50);
-    }
+    if (navbar) navbar.classList.toggle('scrolled', window.scrollY > 50);
   });
 }
 
@@ -26,7 +23,6 @@ function initScrollAnimations() {
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
-
   document.querySelectorAll('.feature-card, .review-card, .about-content, .about-visual')
     .forEach(el => { el.classList.add('fade-in'); observer.observe(el); });
 }
@@ -37,17 +33,14 @@ function initFloatingClock() {
   clock.id = 'floatingClock';
   clock.innerHTML = '<img src="https://cdn-icons-png.flaticon.com/512/2693/2693507.png" alt="clock"/>';
   document.body.appendChild(clock);
-
   let currentX = window.innerWidth / 2;
   let currentY = window.innerHeight / 2;
   let targetX = currentX;
   let targetY = currentY;
-
   window.addEventListener('mousemove', (e) => {
     targetX = e.clientX + 80;
     targetY = e.clientY + window.scrollY - 50;
   });
-
   function animate() {
     currentX += (targetX - currentX) * 0.05;
     currentY += (targetY - currentY) * 0.05;
@@ -56,7 +49,6 @@ function initFloatingClock() {
     requestAnimationFrame(animate);
   }
   animate();
-
   new MutationObserver(() => {
     const dashboard = document.getElementById('dashboard');
     clock.style.display = (dashboard && dashboard.style.display === 'flex') ? 'none' : 'block';
@@ -67,7 +59,6 @@ function scrollToSection(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 }
 
-// ═══ AUTH ═══
 function showAuth(type) {
   document.getElementById('authModal').classList.add('active');
   switchTab(type);
@@ -89,10 +80,8 @@ async function signup() {
   const username = document.getElementById('signupUsername').value.trim();
   const email = document.getElementById('signupEmail').value.trim();
   const password = document.getElementById('signupPassword').value;
-
   if (!username || !email || !password) return showToast('Please fill all fields!', 'error');
   if (password.length < 6) return showToast('Password must be at least 6 characters!', 'error');
-
   try {
     const res = await fetch(`${API}/auth/signup`, {
       method: 'POST',
@@ -107,21 +96,19 @@ async function signup() {
       localStorage.setItem('user', JSON.stringify(currentUser));
       hideAuth();
       showDashboard();
-      showToast(`Welcome to HabitFlow, ${username}! 🎉`, 'success');
+      showToast(`Welcome to HabitFlow, ${username}!`, 'success');
     } else {
       showToast(data.message, 'error');
     }
   } catch (err) {
-    showToast('Cannot connect to server! Is backend running?', 'error');
+    showToast('Cannot connect to server!', 'error');
   }
 }
 
 async function login() {
   const email = document.getElementById('loginEmail').value.trim();
   const password = document.getElementById('loginPassword').value;
-
   if (!email || !password) return showToast('Please fill all fields!', 'error');
-
   try {
     const res = await fetch(`${API}/auth/login`, {
       method: 'POST',
@@ -136,12 +123,12 @@ async function login() {
       localStorage.setItem('user', JSON.stringify(currentUser));
       hideAuth();
       showDashboard();
-      showToast(`Welcome back, ${data.user.username}! 👋`, 'success');
+      showToast(`Welcome back, ${data.user.username}!`, 'success');
     } else {
       showToast(data.message, 'error');
     }
   } catch (err) {
-    showToast('Cannot connect to server! Is backend running?', 'error');
+    showToast('Cannot connect to server!', 'error');
   }
 }
 
@@ -156,7 +143,6 @@ function logout() {
   showToast('Logged out!', 'success');
 }
 
-// ═══ DASHBOARD ═══
 function showDashboard() {
   document.getElementById('dashboard').style.display = 'flex';
   document.getElementById('navbar').style.display = 'none';
@@ -177,7 +163,6 @@ function showDashTab(tab) {
   if (tab === 'profile') loadProfile();
 }
 
-// ═══ HABITS ═══
 function showAddHabit() { document.getElementById('addHabitForm').style.display = 'flex'; }
 function hideAddHabit() { document.getElementById('addHabitForm').style.display = 'none'; }
 
@@ -185,9 +170,7 @@ async function addHabit() {
   const title = document.getElementById('habitTitle').value.trim();
   const description = document.getElementById('habitDesc').value.trim();
   const frequency = document.getElementById('habitFreq').value;
-
   if (!title) return showToast('Please enter a habit title!', 'error');
-
   try {
     const res = await fetch(`${API}/habits`, {
       method: 'POST',
@@ -196,7 +179,7 @@ async function addHabit() {
     });
     const data = await res.json();
     if (data.success) {
-      showToast('Habit added! 🔥', 'success');
+      showToast('Habit added!', 'success');
       hideAddHabit();
       document.getElementById('habitTitle').value = '';
       document.getElementById('habitDesc').value = '';
@@ -211,24 +194,15 @@ async function addHabit() {
 
 async function loadHabits() {
   try {
-    const res = await fetch(`${API}/habits`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
+    const res = await fetch(`${API}/habits`, { headers: { 'Authorization': `Bearer ${token}` } });
     const data = await res.json();
     const list = document.getElementById('habitsList');
-
     if (!data.habits || data.habits.length === 0) {
-      list.innerHTML = `
-        <div style="text-align:center;padding:3rem;color:var(--text-muted)">
-          <div style="font-size:3rem;margin-bottom:1rem">🌱</div>
-          <p>No habits yet! Click "+ Add Habit" to start!</p>
-        </div>`;
+      list.innerHTML = `<div style="text-align:center;padding:3rem;color:var(--text-muted)"><div style="font-size:3rem;margin-bottom:1rem">🌱</div><p>No habits yet! Click "+ Add Habit" to start!</p></div>`;
       return;
     }
-
     list.innerHTML = data.habits.map(habit => {
-      const doneToday = habit.lastCompleted &&
-        new Date(habit.lastCompleted).toDateString() === new Date().toDateString();
+      const doneToday = habit.lastCompleted && new Date(habit.lastCompleted).toDateString() === new Date().toDateString();
       return `
         <div class="habit-card">
           <div class="habit-info">
@@ -237,8 +211,7 @@ async function loadHabits() {
           </div>
           <div class="habit-actions">
             <span class="habit-streak">🔥 ${habit.streak} days</span>
-            <button class="btn-complete" onclick="completeHabit('${habit._id}')"
-              ${doneToday ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
+            <button class="btn-complete" onclick="completeHabit('${habit._id}')" ${doneToday ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>
               ${doneToday ? '✓ Done!' : '✓ Mark Done'}
             </button>
             <button class="btn-delete" onclick="deleteHabit('${habit._id}')">✕</button>
@@ -252,10 +225,7 @@ async function loadHabits() {
 
 async function completeHabit(id) {
   try {
-    const res = await fetch(`${API}/habits/${id}/complete`, {
-      method: 'PUT',
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
+    const res = await fetch(`${API}/habits/${id}/complete`, { method: 'PUT', headers: { 'Authorization': `Bearer ${token}` } });
     const data = await res.json();
     showToast(data.message, data.success ? 'success' : 'error');
     if (data.success) { loadHabits(); checkAndAwardBadges(data.habit.streak); }
@@ -265,16 +235,12 @@ async function completeHabit(id) {
 async function deleteHabit(id) {
   if (!confirm('Delete this habit?')) return;
   try {
-    await fetch(`${API}/habits/${id}`, {
-      method: 'DELETE',
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
+    await fetch(`${API}/habits/${id}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` } });
     showToast('Habit deleted!', 'success');
     loadHabits();
   } catch (err) { showToast('Error!', 'error'); }
 }
 
-// ═══ FRIENDS ═══
 async function addFriend() {
   const input = document.getElementById('friendInput').value.trim();
   if (!input) return showToast('Enter a username!', 'error');
@@ -307,7 +273,6 @@ async function loadFriends() {
   } catch (err) { showToast('Error loading friends!', 'error'); }
 }
 
-// ═══ BADGES ═══
 const BADGE_MILESTONES = [
   { streak: 3, name: 'Starter', icon: '🥉' },
   { streak: 7, name: 'Week Warrior', icon: '🥈' },
@@ -337,14 +302,12 @@ function loadBadges() {
     </div>`).join('');
 }
 
-// ═══ PROFILE ═══
 function loadProfile() {
   const card = document.getElementById('profileCard');
   if (!card || !currentUser) return;
   card.innerHTML = `
     <div style="display:flex;align-items:center;gap:1.5rem;margin-bottom:2rem">
-      <div style="width:70px;height:70px;background:var(--gradient);border-radius:50%;
-        display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:#060F0A">
+      <div style="width:70px;height:70px;background:var(--gradient);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:#060F0A">
         ${currentUser.username?.[0]?.toUpperCase()}
       </div>
       <div>
@@ -363,28 +326,33 @@ function loadProfile() {
     </div>`;
 }
 
-// ═══ PAYMENT ═══
-function startPayment() { showToast('Razorpay coming soon! 💳', 'success'); }
+function startPayment() { showToast('Razorpay coming soon!', 'success'); }
 
-// ═══ CONTACT ═══
-function sendContact() {
+async function sendContact() {
   const name = document.getElementById('contactName').value.trim();
   const email = document.getElementById('contactEmail').value.trim();
   const message = document.getElementById('contactMessage').value.trim();
   if (!name || !email || !message) return showToast('Please fill all fields!', 'error');
-
-  // Save message to localStorage so admin panel can see it
-  const msgs = JSON.parse(localStorage.getItem('hf_messages') || '[]');
-  msgs.unshift({ id: Date.now(), name, email, message, time: new Date().toISOString(), read: false, reply: '' });
-  localStorage.setItem('hf_messages', JSON.stringify(msgs));
-
-  showToast("Message sent! We'll reply soon 📨", 'success');
-  document.getElementById('contactName').value = '';
-  document.getElementById('contactEmail').value = '';
-  document.getElementById('contactMessage').value = '';
+  try {
+    const res = await fetch(`${API}/messages`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+    });
+    const data = await res.json();
+    if (data.success) {
+      showToast('Message sent! We will reply soon!', 'success');
+      document.getElementById('contactName').value = '';
+      document.getElementById('contactEmail').value = '';
+      document.getElementById('contactMessage').value = '';
+    } else {
+      showToast('Error sending message!', 'error');
+    }
+  } catch (err) {
+    showToast('Error sending message!', 'error');
+  }
 }
 
-// ═══ TOAST ═══
 function showToast(message, type = 'success') {
   const toast = document.getElementById('toast');
   toast.textContent = message;
@@ -392,7 +360,6 @@ function showToast(message, type = 'success') {
   setTimeout(() => toast.classList.remove('show'), 3500);
 }
 
-// ═══ AI CHATBOX ═══
 function toggleChat() {
   document.getElementById('chatContainer').classList.toggle('open');
   const notif = document.getElementById('chatNotif');
@@ -405,12 +372,10 @@ async function sendChatMessage() {
   const input = document.getElementById('chatInput');
   const message = input.value.trim();
   if (!message) return;
-
   addChatMessage(message, 'user');
   input.value = '';
   chatHistory.push({ role: 'user', content: message });
   showTyping();
-
   try {
     const res = await fetch(`${API}/chat`, {
       method: 'POST',
@@ -422,19 +387,9 @@ async function sendChatMessage() {
     const reply = data.reply || 'Sorry, try again!';
     addChatMessage(reply, 'bot');
     chatHistory.push({ role: 'assistant', content: reply });
-
-    // Save chat log to localStorage so admin panel can see it
-    const logs = JSON.parse(localStorage.getItem('hf_chatlogs') || '[]');
-    logs.unshift({
-      user: currentUser?.username || 'Guest',
-      time: new Date().toISOString(),
-      messages: chatHistory.slice(-10)
-    });
-    localStorage.setItem('hf_chatlogs', JSON.stringify(logs.slice(0, 50)));
-
   } catch (err) {
     removeTyping();
-    addChatMessage('Make sure your backend server is running! 🔌', 'bot');
+    addChatMessage('Server error! Try again.', 'bot');
   }
 }
 

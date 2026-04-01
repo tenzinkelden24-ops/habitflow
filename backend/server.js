@@ -14,11 +14,11 @@ app.use('/api/friends', require('./routes/friends'));
 app.use('/api/badges', require('./routes/badges'));
 app.use('/api/subscription', require('./routes/subscription'));
 app.use('/api/payment', require('./routes/payment'));
+app.use('/api/messages', require('./routes/messages'));
 
 app.post('/api/chat', function(req, res) {
   const message = (req.body.message || '').toLowerCase();
   let reply = '';
-
   if (message.includes('hi') || message.includes('hello') || message.includes('hey')) {
     reply = 'Hey there! Welcome to HabitFlow! I am HabitBot. How can I help you today?';
   } else if (message.includes('what is habitflow') || message.includes('about')) {
@@ -60,7 +60,6 @@ app.post('/api/chat', function(req, res) {
   } else {
     reply = 'That is interesting! I am HabitBot, here to help you build better habits and use HabitFlow. Ask me about habits, streaks, badges or the app!';
   }
-
   res.json({ success: true, reply: reply });
 });
 

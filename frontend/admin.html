@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitFlow Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #060F0A; color: #E8F5EE; min-height: 100vh; }
+
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-box {
+      background: #0A1A10;
+      border: 1px solid rgba(0,200,150,0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 380px;
+      text-align: center;
+    }
+
+    .login-box h1 { font-size: 1.8rem; font-weight: 800; color: #00C896; margin-bottom: 0.5rem; }
+    .login-box p { color: #7A9E8A; margin-bottom: 2rem; }
+
+    input {
+      width: 100%;
+      background: rgba(0,200,150,0.05);
+      border: 1px solid rgba(0,200,150,0.2);
+      color: #E8F5EE;
+      padding: 0.9rem 1.2rem;
+      border-radius: 12px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      margin-bottom: 1rem;
+    }
+
+    input:focus { border-color: #00C896; }
+
+    button {
+      background: linear-gradient(135deg, #00C896, #FFD700);
+      color: #060F0A;
+      border: none;
+      padding: 0.9rem 2rem;
+      border-radius: 50px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.95rem;
+      width: 100%;
+      transition: all 0.3s;
+    }
+
+    button:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,200,150,0.3); }
+
+    .btn-small {
+      width: auto;
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      border-radius: 50px;
+    }
+
+    .btn-danger {
+      background: rgba(255,50,50,0.2);
+      color: #FF5050;
+      border: 1px solid rgba(255,50,50,0.3);
+    }
+
+    .btn-read {
+      background: rgba(0,200,150,0.15);
+      color: #00C896;
+      border: 1px solid rgba(0,200,150,0.3);
+    }
+
+    /* ADMIN PANEL */
+    .admin-panel { display: none; }
+
+    .admin-header {
+      background: #0A1A10;
+      border-bottom: 1px solid rgba(0,200,150,0.2);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-header h1 { font-size: 1.3rem; font-weight: 800; color: #00C896; }
+
+    .logout-btn {
+      background: transparent;
+      border: 1px solid rgba(0,200,150,0.3);
+      color: #7A9E8A;
+      padding: 0.5rem 1rem;
+      border-radius: 50px;
+      width: auto;
+      font-size: 0.85rem;
+    }
+
+    .admin-body { padding: 2rem; max-width: 1100px; margin: 0 auto; }
+
+    .stats-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: #0A1A10;
+      border: 1px solid rgba(0,200,150,0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      flex: 1;
+      text-align: center;
+    }
+
+    .stat-card .num { font-size: 2rem; font-weight: 800; color: #00C896; }
+    .stat-card .label { color: #7A9E8A; font-size: 0.85rem; margin-top: 0.3rem; }
+
+    .messages-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .messages-header h2 { font-size: 1.3rem; font-weight: 700; }
+
+    .filter-btns { display: flex; gap: 0.5rem; }
+
+    .filter-btn {
+      background: transparent;
+      border: 1px solid rgba(0,200,150,0.2);
+      color: #7A9E8A;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      width: auto;
+      font-size: 0.8rem;
+    }
+
+    .filter-btn.active {
+      background: rgba(0,200,150,0.15);
+      color: #00C896;
+      border-color: rgba(0,200,150,0.4);
+    }
+
+    .message-card {
+      background: #0A1A10;
+      border: 1px solid rgba(0,200,150,0.15);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .message-card.unread { border-color: rgba(0,200,150,0.4); }
+    .message-card:hover { border-color: #00C896; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .msg-info { display: flex; align-items: center; gap: 1rem; }
+
+    .msg-avatar {
+      width: 45px;
+      height: 45px;
+      background: linear-gradient(135deg, #00C896, #FFD700);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #060F0A;
+      flex-shrink: 0;
+    }
+
+    .msg-name { font-weight: 700; font-size: 1rem; }
+    .msg-email { color: #7A9E8A; font-size: 0.85rem; }
+    .msg-date { color: #7A9E8A; font-size: 0.8rem; }
+
+    .msg-actions { display: flex; gap: 0.5rem; align-items: center; }
+
+    .unread-badge {
+      background: rgba(0,200,150,0.2);
+      color: #00C896;
+      border: 1px solid rgba(0,200,150,0.4);
+      padding: 0.2rem 0.7rem;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .msg-text {
+      background: rgba(0,200,150,0.04);
+      border: 1px solid rgba(0,200,150,0.1);
+      border-radius: 10px;
+      padding: 1rem;
+      color: #C0D8C8;
+      line-height: 1.7;
+      font-size: 0.9rem;
+    }
+
+    .reply-section { margin-top: 1rem; display: none; }
+    .reply-section textarea {
+      width: 100%;
+      background: rgba(0,200,150,0.05);
+      border: 1px solid rgba(0,200,150,0.2);
+      color: #E8F5EE;
+      padding: 0.9rem;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      margin-bottom: 0.5rem;
+    }
+
+    .reply-section textarea:focus { border-color: #00C896; }
+
+    .reply-actions { display: flex; gap: 0.5rem; }
+
+    .btn-reply {
+      background: linear-gradient(135deg, #00C896, #FFD700);
+      color: #060F0A;
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      width: auto;
+    }
+
+    .btn-cancel {
+      background: transparent;
+      color: #7A9E8A;
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 0.5rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      width: auto;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 4rem;
+      color: #7A9E8A;
+    }
+
+    .empty-state .icon { font-size: 3rem; margin-bottom: 1rem; }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #0A1A10;
+      border: 1px solid #00C896;
+      color: #00C896;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 600;
+      z-index: 9999;
+      display: none;
+    }
+
+    .toast.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <h1>⚡ Admin Panel</h1>
+      <p>HabitFlow Dashboard — Admin Only</p>
+      <input type="password" id="adminPassword" placeholder="Enter admin password"
+        onkeypress="if(event.key==='Enter') adminLogin()">
+      <button onclick="adminLogin()">Login to Admin Panel</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PANEL -->
+  <div class="admin-panel" id="adminPanel">
+    <div class="admin-header">
+      <h1>⚡ HabitFlow Admin Panel</h1>
+      <button class="logout-btn" onclick="adminLogout()">Logout</button>
+    </div>
+
+    <div class="admin-body">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="num" id="totalCount">0</div>
+          <div class="label">Total Messages</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="unreadCount">0</div>
+          <div class="label">Unread Messages</div>
+        </div>
+        <div class="stat-card">
+          <div class="num" id="readCount">0</div>
+          <div class="label">Read Messages</div>
+        </div>
+      </div>
+
+      <div class="messages-header">
+        <h2>📬 Contact Messages</h2>
+        <div class="filter-btns">
+          <button class="filter-btn active" onclick="filterMessages('all', this)">All</button>
+          <button class="filter-btn" onclick="filterMessages('unread', this)">Unread</button>
+          <button class="filter-btn" onclick="filterMessages('read', this)">Read</button>
+        </div>
+      </div>
+
+      <div id="messagesList"></div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const API = 'https://habitflow-backend-k0bj.onrender.com/api';
+    const ADMIN_PASSWORD = 'habitflow2026';
+    let allMessages = [];
+    let currentFilter = 'all';
+
+    function adminLogin() {
+      const pass = document.getElementById('adminPassword').value;
+      if (pass === ADMIN_PASSWORD) {
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        loadMessages();
+      } else {
+        showToast('Wrong password!');
+      }
+    }
+
+    function adminLogout() {
+      document.getElementById('loginScreen').style.display = 'flex';
+      document.getElementById('adminPanel').style.display = 'none';
+      document.getElementById('adminPassword').value = '';
+    }
+
+    async function loadMessages() {
+      try {
+        const res = await fetch(`${API}/messages`);
+        const data = await res.json();
+        if (data.success) {
+          allMessages = data.messages;
+          updateStats();
+          renderMessages(allMessages);
+        }
+      } catch (err) {
+        showToast('Error loading messages!');
+      }
+    }
+
+    function updateStats() {
+      const total = allMessages.length;
+      const unread = allMessages.filter(m => !m.read).length;
+      const read = allMessages.filter(m => m.read).length;
+      document.getElementById('totalCount').textContent = total;
+      document.getElementById('unreadCount').textContent = unread;
+      document.getElementById('readCount').textContent = read;
+    }
+
+    function filterMessages(filter, btn) {
+      currentFilter = filter;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      if (filter === 'all') renderMessages(allMessages);
+      else if (filter === 'unread') renderMessages(allMessages.filter(m => !m.read));
+      else renderMessages(allMessages.filter(m => m.read));
+    }
+
+    function renderMessages(messages) {
+      const list = document.getElementById('messagesList');
+      if (messages.length === 0) {
+        list.innerHTML = `
+          <div class="empty-state">
+            <div class="icon">📭</div>
+            <p>No messages found!</p>
+          </div>`;
+        return;
+      }
+
+      list.innerHTML = messages.map(msg => `
+        <div class="message-card ${msg.read ? '' : 'unread'}" id="card-${msg._id}">
+          <div class="msg-top">
+            <div class="msg-info">
+              <div class="msg-avatar">${msg.name[0].toUpperCase()}</div>
+              <div>
+                <div class="msg-name">${msg.name}</div>
+                <div class="msg-email">${msg.email}</div>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="msg-date">${new Date(msg.createdAt).toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' })}</div>
+              <div style="margin-top:0.5rem;display:flex;gap:0.5rem;justify-content:flex-end">
+                ${!msg.read ? `<span class="unread-badge">NEW</span>` : ''}
+                ${!msg.read ? `<button class="btn-small btn-read" onclick="markRead('${msg._id}')">Mark Read</button>` : ''}
+                <button class="btn-small" onclick="toggleReply('${msg._id}')" style="background:rgba(0,200,150,0.15);color:#00C896;border:1px solid rgba(0,200,150,0.3)">Reply via Email</button>
+                <button class="btn-small btn-danger" onclick="deleteMessage('${msg._id}')">Delete</button>
+              </div>
+            </div>
+          </div>
+          <div class="msg-text">${msg.message}</div>
+          <div class="reply-section" id="reply-${msg._id}">
+            <textarea id="replyText-${msg._id}" placeholder="Type your reply here..."></textarea>
+            <div class="reply-actions">
+              <button class="btn-reply" onclick="sendReply('${msg._id}', '${msg.email}', '${msg.name}')">Send Reply Email</button>
+              <button class="btn-cancel" onclick="toggleReply('${msg._id}')">Cancel</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function markRead(id) {
+      try {
+        await fetch(`${API}/messages/${id}/read`, { method: 'PUT' });
+        allMessages = allMessages.map(m => m._id === id ? { ...m, read: true } : m);
+        updateStats();
+        filterMessages(currentFilter, document.querySelector('.filter-btn.active'));
+        showToast('Marked as read!');
+      } catch (err) {
+        showToast('Error!');
+      }
+    }
+
+    async function deleteMessage(id) {
+      if (!confirm('Delete this message?')) return;
+      try {
+        await fetch(`${API}/messages/${id}`, { method: 'DELETE' });
+        allMessages = allMessages.filter(m => m._id !== id);
+        updateStats();
+        filterMessages(currentFilter, document.querySelector('.filter-btn.active'));
+        showToast('Message deleted!');
+      } catch (err) {
+        showToast('Error!');
+      }
+    }
+
+    function toggleReply(id) {
+      const section = document.getElementById(`reply-${id}`);
+      section.style.display = section.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function sendReply(id, email, name) {
+      const replyText = document.getElementById(`replyText-${id}`).value.trim();
+      if (!replyText) { showToast('Please type a reply!'); return; }
+      const subject = 'Reply from HabitFlow Team';
+      const body = `Hi ${name},%0D%0A%0D%0A${encodeURIComponent(replyText)}%0D%0A%0D%0ARegards,%0D%0AHabitFlow Team`;
+      window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+      markRead(id);
+      toggleReply(id);
+      showToast('Email client opened!');
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+  </script>
+</body>
+</html>
